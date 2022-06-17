@@ -5,7 +5,7 @@ Fixed::Fixed(void): m_value(0) {
 	std::cout << "Default Constructor called" << std::endl;
 }
 
-Fixed::Fixed(const Fixed& other) {
+Fixed::Fixed(Fixed const& other) {
 	std::cout << "Copy Constructor called" << std::endl;
 	*this = other;
 }
@@ -14,7 +14,7 @@ Fixed::~Fixed(void) {
 	std::cout << "Destructor called" << std::endl;
 }
 
-Fixed&	Fixed::operator=(const Fixed& other) {
+Fixed&	Fixed::operator=(Fixed const& other) {
 	std::cout << "Copy assignment operator called" << std::endl;
 	this->m_value = other.getRawBits();
 	return *this;
@@ -30,4 +30,4 @@ void	Fixed::setRawBits(int const raw) {
 	this->m_value = raw;
 }
 
-const int	Fixed::nbOfFractionalBits = 8;
+int const	Fixed::nbOfFractionalBits = 8;
