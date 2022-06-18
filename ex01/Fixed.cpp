@@ -20,11 +20,19 @@ Fixed::Fixed(float const value) {
 	// convert whole part to binary
 	m_value = whole << Fixed::nbOfFractionalBits;
 
+	if (frac < 0.0f) {
+		frac *= -1.0f;
+	}
+
 	// covert fractional part to binary
 	for (int i = 0; i < Fixed::nbOfFractionalBits; i++) {
 		frac *= 2;
 		if (frac >= 1.0f) {
-			m_value += 1 << (Fixed::nbOfFractionalBits - i - 1);
+			if (m_value < 0) {
+				m_value -= 1 << (Fixed::nbOfFractionalBits - i - 1);
+			} else {
+				m_value += 1 << (Fixed::nbOfFractionalBits - i - 1);
+			}
 			frac -= 1.0f;
 		}
 	}
@@ -88,6 +96,9 @@ float	Fixed::toFloat(void) const {
 }
 
 int	Fixed::toInt(void) const {
+	if (m_value < 0) {
+		return (m_value * -1) >> Fixed::nbOfFractionalBits;
+	}
 	return m_value >> Fixed::nbOfFractionalBits;
 }
 
