@@ -14,18 +14,20 @@ Fixed::Fixed(int const value) {
 
 Fixed::Fixed(float const value) {
 	std::cout << "Float Constructor called" << std::endl;
-	m_value = roundf(value);
-	float	frac = value - m_value;
-	m_value <<= Fixed::nbOfFractionalBits;
+	int	const	whole = roundf(value);
+	float		frac = value - whole;
 
+	// convert whole part to binary
+	m_value = whole << Fixed::nbOfFractionalBits;
+
+	// covert fractional part to binary
 	for (int i = 0; i < Fixed::nbOfFractionalBits; i++) {
 		frac *= 2;
-		if (frac > 1.0f) {
+		if (frac >= 1.0f) {
 			m_value += 1 << (Fixed::nbOfFractionalBits - i - 1);
 			frac -= 1.0f;
 		}
 	}
-
 }
 
 Fixed::Fixed(Fixed const& other) {
@@ -44,45 +46,49 @@ Fixed&	Fixed::operator=(Fixed const& other) {
 }
 
 int	Fixed::getRawBits(void) const {
-	std::cout << "getRawBits member function called" << std::endl;
+	// std::cout << "getRawBits member function called" << std::endl;
 	return m_value;
 };
 
 void	Fixed::setRawBits(int const raw) {
-	std::cout << "setRawBits member function called" << std::endl;
+	// std::cout << "setRawBits member function called" << std::endl;
 	this->m_value = raw;
 }
 
-float	Fixed::toFloat(void) const {
-	float	f = 0;
+float	pow2(int power) {
+	int	const	base = 2;
+	bool const	negative = (power < 0) ? true : false;
+	int			value = base;
 
-	for (int i = 0; i < Fixed::nbOfFractionalBits; i++)
-	{
-		if (m_value & (1 << i)) {
-			f += pow2(Fixed::nbOfFractionalBits - i);
+	if (!power) {
+		return 1.0f;
+	}
+	if (negative) {
+		power *= -1;
+	}
+	for (int i = 0; i < power - 1; i++) {
+		value *= base;
+	}
+
+	return negative ? 1 / (float) value : (float) value;
+}
+
+float	Fixed::toFloat(void) const {
+	float		f = 0;
+	int	const	whole = m_value >> Fixed::nbOfFractionalBits;
+	int const	frac = m_value - (whole << Fixed::nbOfFractionalBits);
+
+	for (int i = 1; i <= Fixed::nbOfFractionalBits; i++) {
+		if (frac & (1 << (Fixed::nbOfFractionalBits - i))) {
+			f += pow2(-i);
 		}
 	}
-	f += m_value >> Fixed::nbOfFractionalBits;
+	f += whole;
 	return f;
 }
 
 int	Fixed::toInt(void) const {
 	return m_value >> Fixed::nbOfFractionalBits;
-}
-
-float	Fixed::pow2(int power) const {
-	int	const	base = 2;
-	bool const	negative = power >= 0 ? true : false;
-	int			value = base;
-
-	if (!power) {
-		return 1.0;
-	}
-	for (int i = 0; i < power; i++) {
-		value *= base;
-	}
-
-	return negative ? 1 / (float) value : (float) value;
 }
 
 int const	Fixed::nbOfFractionalBits = 8;

@@ -27,7 +27,6 @@ class Fixed {
 
 		int					m_value;
 
-		float				pow2(int power) const;
 };
 
 std::ostream&	operator<<(std::ostream& os, Fixed const& fixed);
