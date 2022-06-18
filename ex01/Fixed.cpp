@@ -14,7 +14,7 @@ Fixed::Fixed(int const value) {
 
 Fixed::Fixed(float const value) {
 	std::cout << "Float Constructor called" << std::endl;
-	int	const	whole = roundf(value);
+	int	const	whole = value;
 	float		frac = value - whole;
 
 	// convert whole part to binary
