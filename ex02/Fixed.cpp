@@ -101,6 +101,31 @@ Fixed	Fixed::operator/(Fixed const& other) const {
 	return Fixed(toFloat() / other.toFloat());
 }
 
+// prefix increment
+Fixed&	Fixed::operator++(void) {
+	this->m_value += 1;
+	return *this;
+}
+
+// prefix decrement
+Fixed&	Fixed::operator--(void) {
+	this->m_value -= 1;
+	return *this;
+}
+
+// postfix increment
+Fixed	Fixed::operator++(int) {
+	Fixed	result(*this);	// copy object
+	++(*this);				// increment the original
+	return result;			// return copy (unmodified)
+}
+
+// postfix decrement
+Fixed	Fixed::operator--(int) {
+	Fixed	result(*this);	// copy object
+	--(*this);				// decrement the original
+	return result;			// return copy (unmodified)
+}
 
 int	Fixed::getRawBits(void) const {
 	// std::cout << "getRawBits member function called" << std::endl;
@@ -155,18 +180,15 @@ Fixed&	Fixed::min(Fixed& f1, Fixed& f2) {
 	return (f1 < f2) ? f1 : f2;
 }
 
-Fixed&	Fixed::min(Fixed const& f1, Fixed const& f2) {
-	Fixed&	minRef((f1 < f2) ? f1 : f2);
-
-
-	return minRef;
+Fixed const&	Fixed::min(Fixed const& f1, Fixed const& f2) {
+	return (f1 < f2) ? f1 : f2;
 }
 
 Fixed&	Fixed::max(Fixed& f1, Fixed& f2) {
 	return (f1 > f2) ? f1 : f2;
 }
 
-Fixed&	Fixed::max(Fixed const& f1, Fixed const& f2) {
+Fixed const&	Fixed::max(Fixed const& f1, Fixed const& f2) {
 	return (f1 > f2) ? f1 : f2;
 }
 

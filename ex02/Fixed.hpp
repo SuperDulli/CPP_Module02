@@ -41,11 +41,11 @@ class Fixed {
 		float	toFloat(void) const;
 		int		toInt(void) const;
 
-		static Fixed&	min(Fixed& f1, Fixed& f2);
-		static Fixed&	min(Fixed const& f1, Fixed const& f2);
+		static Fixed&		min(Fixed& f1, Fixed& f2);
+		static Fixed const&	min(Fixed const& f1, Fixed const& f2);
 
-		static Fixed&	max(Fixed& f1, Fixed& f2);
-		static Fixed&	max(Fixed const& f1, Fixed const& f2);
+		static Fixed&		max(Fixed& f1, Fixed& f2);
+		static Fixed const&	max(Fixed const& f1, Fixed const& f2);
 
 	private:
 
