@@ -129,6 +129,7 @@ Fixed&	Fixed::min(Fixed& f1, Fixed& f2) {
 }
 
 Fixed const&	Fixed::min(Fixed const& f1, Fixed const& f2) {
+	std::cout << "const min called" << std::endl;
 	return (f1 < f2) ? f1 : f2;
 }
 
@@ -137,6 +138,7 @@ Fixed&	Fixed::max(Fixed& f1, Fixed& f2) {
 }
 
 Fixed const&	Fixed::max(Fixed const& f1, Fixed const& f2) {
+	std::cout << "const max called" << std::endl;
 	return (f1 > f2) ? f1 : f2;
 }
 
