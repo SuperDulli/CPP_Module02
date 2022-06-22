@@ -47,7 +47,7 @@ float	Fixed::toFloat(void) const {
 }
 
 int	Fixed::toInt(void) const {
-	return m_value >> Fixed::nbOfFractionalBits;
+	return m_value / (1 << Fixed::nbOfFractionalBits);
 }
 
 int const	Fixed::nbOfFractionalBits = 8;
