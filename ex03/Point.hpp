@@ -22,9 +22,6 @@ class Point {
 		Fixed const& getX(void) const;
 		Fixed const& getY(void) const;
 
-		static Point vector(Point const& start, Point const& end);
-
-		static Fixed crossProduct(Point const& vector1, Point const& vector2);
 
 	private:
 
@@ -34,5 +31,9 @@ class Point {
 };
 
 std::ostream&	operator<<(std::ostream& os, Point const& point);
+
+Point vector(Point const& start, Point const& end);
+
+Fixed crossProduct(Point const& vector1, Point const& vector2);
 
 #endif

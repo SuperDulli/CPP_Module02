@@ -15,7 +15,11 @@ Point::Point(Point const& other)
 Point::~Point(void) {}
 
 Point&	Point::operator=(Point const& other) {
-	*this = other;
+	std::cerr
+	<< "Point copy assignment operator: cannnot assign to const members. "
+	<< "Nothing has changed."
+	<< std::endl;
+	(void) other;
 	return *this;
 }
 
@@ -36,10 +40,10 @@ std::ostream&	operator<<(std::ostream& os, Point const& point) {
 	return os;
 }
 
-Point	Point::vector(Point const& start, Point const& end) {
+Point	vector(Point const& start, Point const& end) {
 	return Point(end.getX() - start.getX(), end.getY() - start.getY());
 }
 
-Fixed	Point::crossProduct(Point const& vector1, Point const& vector2) {
+Fixed	crossProduct(Point const& vector1, Point const& vector2) {
 	return Fixed((vector1.getX() * vector2.getY()) - (vector2.getX() * vector1.getY()));
 }
